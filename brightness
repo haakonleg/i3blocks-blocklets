@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# get current and max brightness
+CURRENT=$(</sys/class/backlight/intel_backlight/brightness)
+MAX=$(</sys/class/backlight/intel_backlight/max_brightness)
+
+# calculate brightness percent
+PCT=$(( (CURRENT * 100) / MAX ))
+
+echo " ${PCT}%"
+echo " ${PCT}%"
