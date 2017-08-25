@@ -20,7 +20,7 @@ if [ $STATUS = "up" ]; then
 		echo "#FF0000"
 	fi
 else
-	echo "No network"
-	echo "No network"
+	echo " No network"
+	echo " No network"
 	echo "#FF0000"
 fi
