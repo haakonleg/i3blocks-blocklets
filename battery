@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# directory to get battery info from
+BAT="/sys/class/power_supply/BAT0"
+
+STATUS=$(<${BAT}/status)
+PCT=$(<${BAT}/capacity)
+
+if [ $STATUS = "Discharging" ]; then
+	echo "- ${PCT}%"
+	echo "- ${PCT}%"
+elif [ $STATUS = "Charging" ]; then	
+	echo "+ ${PCT}%"
+	echo "+ ${PCT}%"
+fi
