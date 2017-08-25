@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# block instance is interface name
+STATUS=$(</sys/class/net/${BLOCK_INSTANCE}/operstate)
+
+if [ $STATUS = "up" ]; then
+	# display SSID and local IP
+	SSID=$(iwgetid $BLOCK_INSTANCE -s)
+	IP=$(ip addr show $BLOCK_INSTANCE | awk '$1 == "inet" {print substr($2, 0, length($2)-3)}')
+	echo " $SSID ($IP)"
+	echo " $SSID ($IP)"
+
+	# color according to signal quality
+	QUALITY=$(grep $BLOCK_INSTANCE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+	if [ $QUALITY -ge 60 ]; then
+		echo "#009900"
+	elif [ $QUALITY -ge 30 ]; then
+		echo "#FF3300"
+	else
+		echo "#FF0000"
+	fi
+else
+	echo "No network"
+	echo "No network"
+	echo "#FF0000"
+fi
