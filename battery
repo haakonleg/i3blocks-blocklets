@@ -6,10 +6,32 @@ BAT="/sys/class/power_supply/BAT0"
 STATUS=$(<${BAT}/status)
 PCT=$(<${BAT}/capacity)
 
-if [ $STATUS = "Discharging" ]; then
-	echo "- ${PCT}%"
-	echo "- ${PCT}%"
-elif [ $STATUS = "Charging" ]; then	
-	echo "+ ${PCT}%"
-	echo "+ ${PCT}%"
+if [ $STATUS = "Charging" ]; then
+	echo " ${PCT}%"
+	echo " ${PCT}%"
+elif [ $STATUS = "Discharging" ]; then	
+	if [ $PCT -ge 80 ]; then
+		echo " ${PCT}%"
+		echo " ${PCT}%"
+		echo "#009900"
+	elif [ $PCT -ge 60 ]; then
+		echo " ${PCT}%"
+		echo " ${PCT}%"
+		echo "#009900"
+	elif [ $PCT -ge 40 ]; then
+		echo " ${PCT}%"
+		echo " ${PCT}%"
+		echo "#FF3300"
+	elif [ $PCT -ge 20 ]; then
+		echo " ${PCT}%"
+		echo " ${PCT}%"
+		echo "#FF3300"
+	else
+		echo " ${PCT}%"
+		echo " ${PCT}%"
+		echo "#FF0000"
+	fi
+else
+	echo "${PCT}%"
+	echo "${PCT}%"
 fi
