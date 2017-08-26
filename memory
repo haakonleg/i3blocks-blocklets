@@ -1,5 +1,4 @@
 #!/bin/bash
-# display available memory in GB
 
 MEMINFO=$(</proc/meminfo)
 
