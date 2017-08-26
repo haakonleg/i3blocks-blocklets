@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# location name from yr.no
+LOCATION="Norway/Oslo/Oslo/Oslo"
+
+# retrieve weather data
+XML=$(curl -s https://www.yr.no/place/${LOCATION}/varsel_time_for_time.xml | awk '/<tabular>/, /<\/time>/')
+
+# weather description
+DESCRIPTION=$(echo "$XML" | awk -F \" '/symbol/ {print $6}')
+# temperature
+TEMP=$(echo "$XML" | awk -F \" '/temperature/ {print $4}')
+
+echo " ${DESCRIPTION}: ${TEMP}℃"
+echo " ${DESCRIPTION}: ${TEMP}℃"
+
+# make clickable
+if [ $BLOCK_BUTTON -eq 1 ]; then
+	google-chrome-stable "https://www.yr.no/place/${LOCATION}/"
+fi
+echo "#FFFFFF"
