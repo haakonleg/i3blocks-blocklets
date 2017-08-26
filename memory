@@ -1,0 +1,22 @@
+#!/bin/bash
+# display available memory in GB
+
+MEMINFO=$(</proc/meminfo)
+
+# block instance can be memory or swap
+if [ $BLOCK_INSTANCE = "swap" ]; then
+	MEM_TOTAL=$(echo "$MEMINFO" | awk '/SwapTotal/ {print $2}')
+	MEM_FREE=$(echo "$MEMINFO" | awk '/SwapFree/ {print $2}')
+else
+	MEM_TOTAL=$(echo "$MEMINFO" | awk '/MemTotal/ {print $2}')
+	MEM_FREE=$(echo "$MEMINFO" | awk '/MemFree/ {print $2}')
+fi
+
+# convert to GB
+MEM_TOTAL=$(echo "scale=3;${MEM_TOTAL}/1024^2" | bc -l )
+MEM_FREE=$(echo "scale=3;${MEM_FREE}/1024^2" | bc -l )
+
+# calculate used memory
+MEM_USED=$(echo "scale=3;${MEM_TOTAL}-${MEM_FREE}" | bc -l)
+
+echo "$(printf "%.1f\n" $MEM_USED)/$(printf "%.0f\n" $MEM_TOTAL)G"
