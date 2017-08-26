@@ -1,0 +1,9 @@
+#!/bin/bash
+# show used/available storage space in gb
+
+# block instance is used as storage device
+DF=$(df -h $BLOCK_INSTANCE)
+
+SIZE=$(echo "$DF" | awk '/dev/ {print $2}')
+USED=$(echo "$DF" | awk '/dev/ {print substr($3, 0, length($3)-1)}')
+echo "${USED}/${SIZE}"
